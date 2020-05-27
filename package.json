@@ -1,0 +1,19 @@
+{
+  "name": "chatroom-microservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "dev": "npm run server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.26.0",
+    "mongoose": "^5.9.15",
+    "socket.io": "^2.3.0"
+  }
+}
