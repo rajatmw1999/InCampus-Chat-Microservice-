@@ -8,7 +8,7 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
-var socket = io.connect('http://chatmss.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
 
 // Join chatroom
 socket.emit('joinRoom', { username, room });
@@ -28,14 +28,6 @@ socket.on('message', message => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
-socket.on('oldmessage', message => {
-  console.log(message);
-   outputOldMessage(message);
-
-  // Scroll down
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-});
-
 // Message submit
 chatForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -44,7 +36,7 @@ chatForm.addEventListener('submit', e => {
   const msg = e.target.elements.msg.value;
 
   // Emit message to server
-  socket.emit('chatMessage', {msg, username, room});
+  socket.emit('chatMessage', msg);
 
   // Clear input
   e.target.elements.msg.value = '';
@@ -62,18 +54,6 @@ function outputMessage(message) {
   document.querySelector('.chat-messages').appendChild(div);
 }
 
-function outputOldMessage(message) {
-  message.forEach(function(msg){
-    const div = document.createElement('div');
-    div.classList.add('message');
-  div.innerHTML = `<p class="meta">${msg.user} <span>${msg.time}</span></p>
-  <p class="text">
-    ${msg.text}
-  </p>`;
-  document.querySelector('.chat-messages').appendChild(div);
-});
-}
-
 // Add room name to DOM
 function outputRoomName(room) {
   roomName.innerText = room;
@@ -82,7 +62,6 @@ function outputRoomName(room) {
 // Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = `
-    ${users.map(user => `<li>${user}</li>`).join('')}
+    ${users.map(user => `<li>${user.username}</li>`).join('')}
   `;
-  console.log(users);
 }

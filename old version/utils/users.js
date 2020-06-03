@@ -1,5 +1,5 @@
 const users = [];
-const Rooms = require('../models/Rooms');
+
 
  //Join user to chat
  function userJoin(id, username, room){
@@ -24,14 +24,8 @@ function userLeave(id){
 }
 
 //Get room users
-function getRoomUsers(room) {
-  var members = [];
-  members = Rooms.findOne({name:room}, async(err, found) =>{
-    return found.users;
-  });
-    console.log('members=' + members.users);
-  return members.users;
-  // return users.filter(user => user.room===room);
+function getRoomUsers(room){
+  return users.filter(user => user.room===room);
 }
 
 module.exports = {
