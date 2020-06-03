@@ -8,7 +8,7 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
-var socket = io.connect('http://chatmss.herokuapp.com');
+var socket = io.connect('https://chatmss.herokuapp.com');
 
 // Join chatroom
 socket.emit('joinRoom', { username, room });
